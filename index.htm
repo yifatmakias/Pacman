@@ -1,180 +1,89 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+    <header>Pacman</header>
+    <menu>
+        <div class="tab">
+            <button class="tablinks" onclick="openTab(event, 'welcome')" id="defaultOpen">Welcome</button>
+            <button class="tablinks" onclick="openTab(event, 'register')">Register</button>
+            <button class="tablinks" onclick="openTab(event, 'login')">Login</button>
+            <button class="tablinks" onclick="openTab(event, 'about')">About</button>
+        </div>
+    </menu>
+    <content>
+            <div id="welcome" class="tabcontent">
+                welcome <br>
+                <button onclick="openTab(event, 'register')">Register</button><br>
+                <button onclick="openTab(event, 'login')">Login</button>
+            </div>
+            <div id="register" class="tabcontent">
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.js"></script>
+                <form id="register-form">
+                    <div class="container">
+                        <h1>Register</h1>
+                        <p>Please fill in this form to create an account.</p>
+                        <hr>
+                    
+                        <label for="username"><b>User name</b></label>
+                        <input type="text" placeholder="Enter User Name" id="username-id" name="username" required><br>
 
-<head></head>
+                        <label for="psw"><b>Password</b></label>
+                        <input type="password" placeholder="Enter Password" id="psw-id" name="psw" required><br>
 
-<body>SCORE:
-<input id="lblScore" type="text"/>
-<br/>
-TIME:
-<input id="lblTime" type="text"/>
-<br/>
-<canvas id="canvas" height="600" width="600"></canvas>
+                        <label for="firstname"><b>First name</b></label>
+                        <input type="text" placeholder="Enter First Name" name="firstname" required><br>
 
+                        <label for="lastname"><b>Last name</b></label>
+                        <input type="text" placeholder="Enter Last Name" name="lastname"  required><br>
 
-<script type="text/javascript">
-    var context = canvas.getContext("2d");
-    var shape = new Object();
-    var board;
-    var score;
-    var pac_color;
-    var start_time;
-    var time_elapsed;
-    var interval;
+                        <label for="email"><b>Email</b></label>
+                        <input type="text" placeholder="mail@website.com" name="email" required><br>
+                    
+                        <label for="bday"><b>Birth date</b></label><br>
+                        <input type="date" placeholder="Enter Birth Date" name="bday" required><br>
+                        <hr>
+                        <button type="submit" class="registerbtn">Register</button>
+                    </div>
+                    
+                </form>
+            </div>
+            <div id="login" class="tabcontent">
+                <div class="login-form" id="login-form">
+                    <form class="login-form">
+                        <label for="username"><b>User name</b></label>
+                        <input type="text" placeholder="Enter User Name" id="loginusername" name="login-username" required><br>
 
-    Start();
-
-    function Start() {
-        board = new Array();
-        score = 0;
-        pac_color = "yellow";
-        var cnt = 100;
-        var food_remain = 50;
-        var pacman_remain = 1;
-        start_time = new Date();
-        for (var i = 0; i < 10; i++) {
-            board[i] = new Array();
-            //put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
-            for (var j = 0; j < 10; j++) {
-                if ((i === 3 && j === 3) || (i === 3 && j === 4) || (i === 3 && j === 5) || (i === 6 && j === 1) || (i === 6 && j === 2)) {
-                    board[i][j] = 4;
-                } else {
-                    var randomNum = Math.random();
-                    if (randomNum <= 1.0 * food_remain / cnt) {
-                        food_remain--;
-                        board[i][j] = 1;
-                    } else if (randomNum < 1.0 * (pacman_remain + food_remain) / cnt) {
-                        shape.i = i;
-                        shape.j = j;
-                        pacman_remain--;
-                        board[i][j] = 2;
-                    } else {
-                        board[i][j] = 0;
-                    }
-                    cnt--;
-                }
-            }
-        }
-        while (food_remain > 0) {
-            var emptyCell = findRandomEmptyCell(board);
-            board[emptyCell[0]][emptyCell[1]] = 1;
-            food_remain--;
-        }
-        keysDown = {};
-        addEventListener("keydown", function (e) {
-            keysDown[e.code] = true;
-        }, false);
-        addEventListener("keyup", function (e) {
-            keysDown[e.code] = false;
-        }, false);
-        interval = setInterval(UpdatePosition, 250);
-    }
-
-
-    function findRandomEmptyCell(board) {
-        var i = Math.floor((Math.random() * 9) + 1);
-        var j = Math.floor((Math.random() * 9) + 1);
-        while (board[i][j] !== 0) {
-            i = Math.floor((Math.random() * 9) + 1);
-            j = Math.floor((Math.random() * 9) + 1);
-        }
-        return [i, j];
-    }
-
-    /**
-     * @return {number}
-     */
-    function GetKeyPressed() {
-        if (keysDown['ArrowUp']) {
-            return 1;
-        }
-        if (keysDown['ArrowDown']) {
-            return 2;
-        }
-        if (keysDown['ArrowLeft']) {
-            return 3;
-        }
-        if (keysDown['ArrowRight']) {
-            return 4;
-        }
-    }
-
-    function Draw() {
-        context.clearRect(0, 0, canvas.width, canvas.height); //clean board
-        lblScore.value = score;
-        lblTime.value = time_elapsed;
-        for (var i = 0; i < 10; i++) {
-            for (var j = 0; j < 10; j++) {
-                var center = new Object();
-                center.x = i * 60 + 30;
-                center.y = j * 60 + 30;
-                if (board[i][j] === 2) {
-                    context.beginPath();
-                    context.arc(center.x, center.y, 30, 0.15 * Math.PI, 1.85 * Math.PI); // half circle
-                    context.lineTo(center.x, center.y);
-                    context.fillStyle = pac_color; //color
-                    context.fill();
-                    context.beginPath();
-                    context.arc(center.x + 5, center.y - 15, 5, 0, 2 * Math.PI); // circle
-                    context.fillStyle = "black"; //color
-                    context.fill();
-                } else if (board[i][j] === 1) {
-                    context.beginPath();
-                    context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
-                    context.fillStyle = "black"; //color
-                    context.fill();
-                } else if (board[i][j] === 4) {
-                    context.beginPath();
-                    context.rect(center.x - 30, center.y - 30, 60, 60);
-                    context.fillStyle = "grey"; //color
-                    context.fill();
-                }
-            }
-        }
-
-
-    }
-
-    function UpdatePosition() {
-        board[shape.i][shape.j] = 0;
-        var x = GetKeyPressed();
-        if (x === 1) {
-            if (shape.j > 0 && board[shape.i][shape.j - 1] !== 4) {
-                shape.j--;
-            }
-        }
-        if (x === 2) {
-            if (shape.j < 9 && board[shape.i][shape.j + 1] !== 4) {
-                shape.j++;
-            }
-        }
-        if (x === 3) {
-            if (shape.i > 0 && board[shape.i - 1][shape.j] !== 4) {
-                shape.i--;
-            }
-        }
-        if (x === 4) {
-            if (shape.i < 9 && board[shape.i + 1][shape.j] !== 4) {
-                shape.i++;
-            }
-        }
-        if (board[shape.i][shape.j] === 1) {
-            score++;
-        }
-        board[shape.i][shape.j] = 2;
-        var currentTime = new Date();
-        time_elapsed = (currentTime - start_time) / 1000;
-        if (score >= 20 && time_elapsed <= 10) {
-            pac_color = "green";
-        }
-        if (score === 50) {
-            window.clearInterval(interval);
-            window.alert("Game completed");
-        } else {
-            Draw();
-        }
-    }
-</script>
+                        <label for="psw"><b>Password</b></label>
+                        <input type="password" placeholder="Enter Password" id="loginpsw" name="login-psw" required><br>
+                        <button type="button" onclick="check_login()">Login</button>
+                    </form>
+                </div>
+                <div id="game">                
+                    SCORE:
+                    <input id="lblScore" type="text"/>
+                    <br/>
+                    TIME:
+                    <input id="lblTime" type="text"/>
+                    <br/>
+                    <canvas id="canvas" height="600" width="600"></canvas>
+                </div>
+            </div>
+            <div id="about" class="tabcontent">
+                <div id="myModal" class="modal">
+                    <!-- Modal content -->
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <p>Some text in the Modal..</p>
+                    </div>
+                </div>
+            </div>
+    </content>
+    <footer></footer>
+    <script type="text/javascript" src="logic.js"></script>
 </body>
 
 </html>
