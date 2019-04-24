@@ -62,14 +62,70 @@
                         <button type="button" onclick="check_login()">Login</button>
                     </form>
                 </div>
+                <div id="settings">
+                    <p>Press a key on the keyboard in the following input fields to choose the game controls</p>
+                    <label for="up">Up</label>
+                    <input type="text" id="up" name="up" onkeydown="getGameControl(event,'up')">
+                    The Unicode value is:
+                    <p id="up_value"></p>
+
+                    <label for="down">Down</label>
+                    <input type="text" id="down" name="down" onkeydown="getGameControl(event,'down')">
+                    The Unicode value is: 
+                    <p id="down_value"></p>
+
+                    <label for="right">Right</label>
+                    <input type="text" id="right" name="right" onkeydown="getGameControl(event,'right')">
+                    The Unicode value is: 
+                    <p id="right_value"></p>
+
+                    <label for="left">Left</label>
+                    <input type="text" id="left" name="left" onkeydown="getGameControl(event,'left')">
+                    The Unicode value is: <p id="left_value"></p>
+
+                    <p>Set the number of balls in the game:</p>
+                    <input type="range" min="50" max="90" class="slider" id="myRange">
+                    <label for="value">Chosen value:</label>
+                    <p id="slider_value"></p>
+                    <p>Set the colors of balls in the game:</p>
+                    <div>
+                        <input type="color" id="5point" name="5point" value="#000000">
+                        <label for="5point">5 point balls</label>
+                    </div>
+                    <div>
+                        <input type="color" id="15point" name="15point" value="#0000ff">
+                        <label for="15point">15 points balls</label><br>
+                    </div>
+                    <div>
+                        <input type="color" id="25point" name="25point" value="#ff0000">
+                        <label for="25point">25 points balls</label>
+                    </div>
+                    <p>Set time for the game (seconds):</p>
+                    <input type="number" id="game_time" name="game_time" value="60" min="60"><br>
+
+                    <p>Set the number of monsters in the game:</p>
+                    <select id="num_of_monsters">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                    </select>
+                    <br><br>
+                    <button type="button" onclick="randomSettings()">Random</button>
+                    <button type="button" onclick="set()">Set</button>
+
+                </div>
                 <div id="game">                
                     SCORE:
                     <input id="lblScore" type="text"/>
-                    <br/>
                     TIME:
                     <input id="lblTime" type="text"/>
+                    LIVES:
+                    <input id="lblLives" type="text"/>
+                    Pacman Name:
+                    <input id="lblPacmanName" type="text"/>
                     <br/>
-                    <canvas id="canvas" height="600" width="600"></canvas>
+                    <canvas id="canvas" height="600" width="600"></canvas><br>
+                    <button id="new_game" onclick="Start()">Start New Game</button>
                 </div>
             </div>
             <div id="about" class="tabcontent">
