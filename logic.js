@@ -47,11 +47,13 @@ var intersection;
 var game_over;
 var ghost_radius;
 var prev_ghost;
+var isMaxScore;
 
 function Start() {
     ghost1 = null;
     ghost2 = null;
     ghost3 = null;
+    isMaxScore = false;
     prev_ghost = 0;
     direction = "RIGHT";
     ghost_radius = 20;
@@ -346,7 +348,7 @@ function getGhostDirection(ghost, ghost_number){
 
     var minDistance = Math.min(Math.min(distanceUp, distanceDown), Math.min(distanceLeft, distanceRight));
     var random_step = Math.random();
-    if (random_step <= 0.6){
+    if (random_step <= 1){
         var random_index_step = Math.floor(Math.random() * (index-0+1)+0);
         if (direction_array[random_index_step] === "UP"){
             minDistance = distanceUp;
@@ -535,6 +537,23 @@ function UpdatePosition() {
     if (lives <= 0) {
         game_over = true;
     }
+    if (isMaxScore === true) {
+        window.clearInterval(interval);
+        window.alert("We have a Winner!!!");
+        audio.pause();
+    }
+    loop1:
+        for (var i =0; i < 10; i++) {
+            for (var j =0; j < 10; j++) {
+                if (board[i][j] === 1 || board[i][j] === 5 || board[i][j] === 6) {
+                    isMaxScore = false;
+                    break loop1;
+                }
+                else {
+                    isMaxScore = true;
+                }
+            }
+        }
     if (time_elapsed >= game_time) {
         if (score < 150) {
             window.clearInterval(interval);
