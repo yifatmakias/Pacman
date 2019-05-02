@@ -293,7 +293,7 @@ function Draw() {
 }
 
 function isValidStep(i, j) {
-    if (j >= 0 && j <= 9 && i >= 0 && i <= 9 && board[i][j] != 4) {
+    if (j >= 0 && j <= 9 && i >= 0 && i <= 9 && board[i][j] !== 4 && board[i][j] !== 3) {
         return true;
     }
     else {
@@ -306,6 +306,8 @@ function getGhostDirection(ghost, ghost_number){
     var distanceDown = Number.MAX_SAFE_INTEGER;
     var distanceLeft = Number.MAX_SAFE_INTEGER;
     var distanceRight = Number.MAX_SAFE_INTEGER;
+    var index = 0;
+    var direction_array = [];
     // up move
     var up_i = ghost.i;
     var up_j = ghost.j - 1;
@@ -324,17 +326,42 @@ function getGhostDirection(ghost, ghost_number){
 
     if (isValidStep(up_i, up_j) === true) {
         distanceUp = Math.sqrt(Math.pow((up_i - shape.i) ,2) + Math.pow((up_j - shape.j) ,2));
+        direction_array[index] = "UP";
+        index++;
     }
     if (isValidStep(down_i, down_j) === true) {
         distanceDown = Math.sqrt(Math.pow((down_i - shape.i) ,2) + Math.pow((down_j - shape.j) ,2));
+        direction_array[index] = "DOWN";
+        index++;
     }
-    if (isValidStep(left_i, left_j)=== true) {
+    if (isValidStep(left_i, left_j) === true) {
         distanceLeft = Math.sqrt(Math.pow((left_i - shape.i) ,2) + Math.pow((left_j - shape.j) ,2));
+        direction_array[index] = "LEFT";
+        index++;
     }
     if (isValidStep(right_i, right_j) === true) {
         distanceRight = Math.sqrt(Math.pow((right_i - shape.i) ,2) + Math.pow((right_j - shape.j) ,2));
+        direction_array[index] = "RIGHT";
     }
+
     var minDistance = Math.min(Math.min(distanceUp, distanceDown), Math.min(distanceLeft, distanceRight));
+    var random_step = Math.random();
+    if (random_step <= 0.6){
+        var random_index_step = Math.floor(Math.random() * (index-0+1)+0);
+        if (direction_array[random_index_step] === "UP"){
+            minDistance = distanceUp;
+        }
+        if (direction_array[random_index_step] === "DOWN"){
+            minDistance = distanceDown;
+        }
+        if (direction_array[random_index_step] === "LEFT"){
+            minDistance = distanceLeft;
+        }
+        if (direction_array[random_index_step] === "RIGHT"){
+            minDistance = distanceRight;
+        }
+    }
+
     switch(minDistance){
         case distanceUp:
         if (ghost_number === 1) {
@@ -407,7 +434,9 @@ function moveGhost(ghost, ghost_dirction, ghost_num) {
         if (lives > 0) {
             lives-=1;
         }
+        intersection = true;
         prev_ghost = 0;
+        /** 
         if (ghost_num === 1) {
             ghost.i = 0;
             ghost.j = 0;
@@ -421,15 +450,10 @@ function moveGhost(ghost, ghost_dirction, ghost_num) {
             ghost.j = 0;  
         }
         intersection = true;
-        return;
+        return;*/
     }
-    
-    else if (prev_ghost === 3) {
-        board[ghost.i][ghost.j] = 0;
-    }
-    else {
-        board[ghost.i][ghost.j] = prev_ghost;
-    }
+
+    board[ghost.i][ghost.j] = prev_ghost;
     switch(ghost_dirction) {
         case "UP":
         ghost.j--;
@@ -480,7 +504,7 @@ function UpdatePosition() {
         }
     }
     if (intersection === true) {
-        intersection = false;
+        intersection = false;    
         var i = Math.floor(Math.random() * 10);
         var j = Math.floor(Math.random() * 10);
         while (i === shape.i && j === shape.j) {
