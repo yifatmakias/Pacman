@@ -100,6 +100,9 @@ function Start() {
                 ghost3.i = i;
                 ghost3.j = j;
             }
+            else if (i === 9 && j === 9) {
+                board[i][j] = 7;
+            }
             //put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
             else if ((i === 3 && j === 3) || (i === 3 && j === 4) || (i === 3 && j === 5) || (i === 6 && j === 1) || (i === 6 && j === 2)) {
                 board[i][j] = 4;
@@ -290,6 +293,16 @@ function Draw() {
 				context.arc(center.x + ghost_radius/3 + ghost_radius/5, center.y - ghost_radius/5, ghost_radius/6, 0, Math.PI*2, true); //black
 				context.fill();
             }
+            else if (board[i][j] === 7) {
+                context.beginPath();
+                context.rect(center.x - 15, center.y - 15, 40, 40);
+                context.strokeStyle = "black"; //color
+                context.stroke();
+                context.closePath();
+                context.beginPath();
+                context.font = "20px Arial";
+                context.fillText("+50", center.x-13, center.y+5);
+            }
         }
     }
 }
@@ -348,7 +361,7 @@ function getGhostDirection(ghost, ghost_number){
 
     var minDistance = Math.min(Math.min(distanceUp, distanceDown), Math.min(distanceLeft, distanceRight));
     var random_step = Math.random();
-    if (random_step <= 1){
+    if (random_step <= 0.6){
         var random_index_step = Math.floor(Math.random() * (index-0+1)+0);
         if (direction_array[random_index_step] === "UP"){
             minDistance = distanceUp;
@@ -789,6 +802,11 @@ function openTab(evt, tabName) {
 }
 
 function set() {
+        // check if all fields are valid
+        if (controls.length !== 4) {
+            alert("Please enter all the settings fields.");
+            return;
+        }
 
         // set number of balls
         num_balls = document.getElementById("myRange").value;
