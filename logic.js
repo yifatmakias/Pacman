@@ -53,6 +53,7 @@ var prev_ghost;
 var prev_bonus;
 var isMaxScore;
 var isBonusEaten;
+var isTimeUp;
 
 function Start() {
     ghost1 = null;
@@ -61,6 +62,7 @@ function Start() {
     bonus = null;
     isMaxScore = false;
     isBonusEaten = false;
+    isTimeUp = false;
     prev_ghost = 0;
     prev_bonus = 0;
     direction = "RIGHT";
@@ -329,7 +331,7 @@ function isValidStep(i, j) {
 }
 
 function isValidStepForBonus(i, j) {
-    if (j >= 0 && j <= 9 && i >= 0 && i <= 9 && board[i][j] !== 4 && board[i][j] !== 3 && board[i][j] !== 2 && board[i][j] !== 7) {
+    if (j >= 0 && j <= 9 && i >= 0 && i <= 9 && board[i][j] !== 4 && board[i][j] !== 3 && board[i][j] !== 2) {
         return true;
     }
     else {
@@ -370,19 +372,20 @@ function getBonusDirection(){
     }
     if (isValidStepForBonus(right_i, right_j) === true) {
         direction_array[index] = "RIGHT";
+        index++;
     }
 
-    var random_index_step = Math.floor(Math.random() * (index-0+1)+0);
+    var random_index_step = Math.floor(Math.random() * (index-0)+0);
     if (direction_array[random_index_step] === "UP"){
         direction_bonus = "UP";
     }
-    if (direction_array[random_index_step] === "DOWN"){
+    else if (direction_array[random_index_step] === "DOWN"){
         direction_bonus = "DOWN";
     }
-    if (direction_array[random_index_step] === "LEFT"){
+    else if (direction_array[random_index_step] === "LEFT"){
         direction_bonus = "LEFT";
     }
-    if (direction_array[random_index_step] === "RIGHT"){
+    else if (direction_array[random_index_step] === "RIGHT"){
         direction_bonus = "RIGHT";
     }
 }
@@ -428,12 +431,13 @@ function getGhostDirection(ghost, ghost_number){
     if (isValidStep(right_i, right_j) === true) {
         distanceRight = Math.sqrt(Math.pow((right_i - shape.i) ,2) + Math.pow((right_j - shape.j) ,2));
         direction_array[index] = "RIGHT";
+        index++;
     }
 
     var minDistance = Math.min(Math.min(distanceUp, distanceDown), Math.min(distanceLeft, distanceRight));
     var random_step = Math.random();
     if (random_step <= 0.6){
-        var random_index_step = Math.floor(Math.random() * (index-0+1)+0);
+        var random_index_step = Math.floor(Math.random() * (index-0)+0);
         if (direction_array[random_index_step] === "UP"){
             minDistance = distanceUp;
         }
@@ -583,25 +587,25 @@ function UpdatePosition() {
     var x = GetKeyPressed();
     if (x === 1) {
         direction = "UP";
-        if (shape.j > 0 && board[shape.i][shape.j - 1] !== 4) {
+        if (shape.j > 0 && board[shape.i][shape.j - 1] !== 4 && board[shape.i][shape.j - 1] !== 3) {
             shape.j--;
         }
     }
     if (x === 2) {
         direction = "DOWN";
-        if (shape.j < 9 && board[shape.i][shape.j + 1] !== 4) {
+        if (shape.j < 9 && board[shape.i][shape.j + 1] !== 4 && board[shape.i][shape.j + 1] !== 3) {
             shape.j++;
         }
     }
     if (x === 3) {
         direction = "LEFT";
-        if (shape.i > 0 && board[shape.i - 1][shape.j] !== 4) {
+        if (shape.i > 0 && board[shape.i - 1][shape.j] !== 4 && board[shape.i - 1][shape.j] !== 3) {
             shape.i--;
         }
     }
     if (x === 4) {
         direction = "RIGHT";
-        if (shape.i < 9 && board[shape.i + 1][shape.j] !== 4) {
+        if (shape.i < 9 && board[shape.i + 1][shape.j] !== 4 && board[shape.i + 1][shape.j] !== 3) {
             shape.i++;
         }
     }
@@ -633,45 +637,53 @@ function UpdatePosition() {
     var currentTime = new Date();
     time_elapsed = (currentTime - start_time) / 1000;
     if (game_over === true) {
-        game_over = false;
+        console.log(lives);
+        Draw();
         window.clearInterval(interval);
         window.alert("You Lost!");
         audio.pause();
     }
-    if (lives <= 0) {
+    else if (lives <= 0) {
         game_over = true;
     }
-    if (isMaxScore === true) {
+    else if (isMaxScore === true) {
+        console.log(score);
+        Draw();
         window.clearInterval(interval);
         window.alert("We have a Winner!!!");
         audio.pause();
     }
-    loop1:
-        for (var i =0; i < 10; i++) {
-            for (var j =0; j < 10; j++) {
-                if (board[i][j] === 1 || board[i][j] === 5 || board[i][j] === 6) {
-                    isMaxScore = false;
-                    break loop1;
-                }
-                else {
-                    isMaxScore = true;
-                }
-            }
-        }
-    if (time_elapsed >= game_time) {
+    else if (isTimeUp === true) {
         if (score < 150) {
+            Draw();
             window.clearInterval(interval);
             window.alert("You can do better. Your score is: " + score);
             audio.pause();
         }
         else {
+            Draw();
             window.clearInterval(interval);
             window.alert("We have a Winner!!!");
             audio.pause();
         }
     }
- else {
+    else if (time_elapsed >= game_time) {
+        isTimeUp = true;
+    }
+    else {
         Draw();
+    }
+    loop1:
+    for (var i =0; i < 10; i++) {
+        for (var j =0; j < 10; j++) {
+            if (board[i][j] === 1 || board[i][j] === 5 || board[i][j] === 6 || board[i][j] === 7) {
+                isMaxScore = false;
+                break loop1;
+            }
+            else {
+                isMaxScore = true;
+            }
+        }
     }
 }
 
