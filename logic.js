@@ -25,14 +25,17 @@ slider.oninput = function() {
   output.innerHTML = this.value;
 }
 
+//game parameters
 var context = canvas.getContext("2d");
 var shape = new Object();
+var bonus;
 var ghost1;
 var ghost2;
 var ghost3;
 var direction_ghost1;
 var direction_ghost2;
 var direction_ghost3;
+var direction_bonus;
 var board;
 var score;
 var lives;
@@ -47,15 +50,21 @@ var intersection;
 var game_over;
 var ghost_radius;
 var prev_ghost;
+var prev_bonus;
 var isMaxScore;
+var isBonusEaten;
 
 function Start() {
     ghost1 = null;
     ghost2 = null;
     ghost3 = null;
+    bonus = null;
     isMaxScore = false;
+    isBonusEaten = false;
     prev_ghost = 0;
+    prev_bonus = 0;
     direction = "RIGHT";
+    direction_bonus = "LEFT";
     ghost_radius = 20;
     intersection = false;
     game_over = false;
@@ -102,6 +111,9 @@ function Start() {
             }
             else if (i === 9 && j === 9) {
                 board[i][j] = 7;
+                bonus = new Object();
+                bonus.i = i;
+                bonus.j = j;
             }
             //put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
             else if ((i === 3 && j === 3) || (i === 3 && j === 4) || (i === 3 && j === 5) || (i === 6 && j === 1) || (i === 6 && j === 2)) {
@@ -308,11 +320,70 @@ function Draw() {
 }
 
 function isValidStep(i, j) {
-    if (j >= 0 && j <= 9 && i >= 0 && i <= 9 && board[i][j] !== 4 && board[i][j] !== 3) {
+    if (j >= 0 && j <= 9 && i >= 0 && i <= 9 && board[i][j] !== 4 && board[i][j] !== 3 && board[i][j] !== 7) {
         return true;
     }
     else {
         return false;
+    }
+}
+
+function isValidStepForBonus(i, j) {
+    if (j >= 0 && j <= 9 && i >= 0 && i <= 9 && board[i][j] !== 4 && board[i][j] !== 3 && board[i][j] !== 2 && board[i][j] !== 7) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+function getBonusDirection(){
+    var index = 0;
+    var direction_array = [];
+    // up move
+    var up_i = bonus.i;
+    var up_j = bonus.j - 1;
+
+    // down move
+    var down_i = bonus.i;
+    var down_j = bonus.j + 1;
+
+    // left move
+    var left_i = bonus.i - 1;
+    var left_j = bonus.j;
+
+    // right move
+    var right_i = bonus.i + 1;
+    var right_j = bonus.j;
+
+    if (isValidStepForBonus(up_i, up_j) === true) {
+        direction_array[index] = "UP";
+        index++;
+    }
+    if (isValidStepForBonus(down_i, down_j) === true) {
+        direction_array[index] = "DOWN";
+        index++;
+    }
+    if (isValidStepForBonus(left_i, left_j) === true) {
+        direction_array[index] = "LEFT";
+        index++;
+    }
+    if (isValidStepForBonus(right_i, right_j) === true) {
+        direction_array[index] = "RIGHT";
+    }
+
+    var random_index_step = Math.floor(Math.random() * (index-0+1)+0);
+    if (direction_array[random_index_step] === "UP"){
+        direction_bonus = "UP";
+    }
+    if (direction_array[random_index_step] === "DOWN"){
+        direction_bonus = "DOWN";
+    }
+    if (direction_array[random_index_step] === "LEFT"){
+        direction_bonus = "LEFT";
+    }
+    if (direction_array[random_index_step] === "RIGHT"){
+        direction_bonus = "RIGHT";
     }
 }
 
@@ -443,6 +514,36 @@ function updateGhostPosition() {
     }
 }
 
+function updateBonusPosition() {
+    if (bonus !== null && isBonusEaten === false) {
+        getBonusDirection();
+        moveBonus(direction_bonus);
+    }
+}
+
+function moveBonus(bonus_direction) {
+    board[bonus.i][bonus.j] = prev_bonus;
+    switch(bonus_direction) {
+        case "UP":
+        bonus.j--;
+        break;
+
+        case "DOWN":
+        bonus.j++;
+        break;
+
+        case "LEFT":
+        bonus.i--;
+        break;
+
+        case "RIGHT":
+        bonus.i++;
+        break;
+    }
+    prev_bonus = board[bonus.i][bonus.j];
+    board[bonus.i][bonus.j] = 7;
+}
+
 function moveGhost(ghost, ghost_dirction, ghost_num) {
     if (prev_ghost === 2) {
         score-=10;
@@ -451,21 +552,6 @@ function moveGhost(ghost, ghost_dirction, ghost_num) {
         }
         intersection = true;
         prev_ghost = 0;
-        /** 
-        if (ghost_num === 1) {
-            ghost.i = 0;
-            ghost.j = 0;
-        }
-        else if (ghost_num === 2) {
-            ghost.i = 0;
-            ghost.j = 9;
-        }
-        else {
-            ghost.i = 9;
-            ghost.j = 0;  
-        }
-        intersection = true;
-        return;*/
     }
 
     board[ghost.i][ghost.j] = prev_ghost;
@@ -492,6 +578,7 @@ function moveGhost(ghost, ghost_dirction, ghost_num) {
 
 function UpdatePosition() {
     updateGhostPosition();
+    updateBonusPosition();
     board[shape.i][shape.j] = 0;
     var x = GetKeyPressed();
     if (x === 1) {
@@ -522,7 +609,7 @@ function UpdatePosition() {
         intersection = false;    
         var i = Math.floor(Math.random() * 10);
         var j = Math.floor(Math.random() * 10);
-        while (i === shape.i && j === shape.j) {
+        while ((i === shape.i && j === shape.j) || board[i][j] === 4 || board[i][j] === 3 || board[i][j] === 7) {
             i = Math.floor(Math.random() * 10);
             j = Math.floor(Math.random() * 10);
         }
@@ -538,14 +625,18 @@ function UpdatePosition() {
     if (board[shape.i][shape.j] === 6) {
         score+=25;
     }
+    if (board[shape.i][shape.j] === 7) {
+        score+=50;
+        isBonusEaten = true;
+    }
     board[shape.i][shape.j] = 2;
     var currentTime = new Date();
     time_elapsed = (currentTime - start_time) / 1000;
-    if (game_over) {
+    if (game_over === true) {
+        game_over = false;
         window.clearInterval(interval);
         window.alert("You Lost!");
         audio.pause();
-        Start();
     }
     if (lives <= 0) {
         game_over = true;
