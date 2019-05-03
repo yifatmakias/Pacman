@@ -693,8 +693,6 @@ function UpdatePosition() {
     time_elapsed = (currentTime - start_time) / 1000;
 
     if (game_over === true) {
-        console.log(lives);
-        Draw();
         window.clearInterval(interval);
         window.alert("You Lost!");
         audio.pause();
@@ -703,21 +701,17 @@ function UpdatePosition() {
         game_over = true;
     }
     else if (isMaxScore === true) {
-        console.log(score);
-        Draw();
         window.clearInterval(interval);
         window.alert("We have a Winner!!!");
         audio.pause();
     }
     else if (isTimeUp === true) {
         if (score < 150) {
-            Draw();
             window.clearInterval(interval);
             window.alert("You can do better. Your score is: " + score);
             audio.pause();
         }
         else {
-            Draw();
             window.clearInterval(interval);
             window.alert("We have a Winner!!!");
             audio.pause();
@@ -725,10 +719,8 @@ function UpdatePosition() {
     }
     else if (time_elapsed >= game_time) {
         isTimeUp = true;
-    }
-    else {
-        Draw();
-    }
+    }  
+    Draw();
     loop1:
     for (var i =0; i < 10; i++) {
         for (var j =0; j < 10; j++) {
