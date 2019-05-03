@@ -534,6 +534,11 @@ function getGhostDirection(ghost, ghost_number){
     } 
 }
 
+function newGame() {
+    window.clearInterval(interval);
+    Start();
+}
+
 function updateGhostPosition() {
     if (ghost1 !== null) {
         getGhostDirection(ghost1, 1);
@@ -765,7 +770,6 @@ function UpdatePosition() {
         }
     }
 }
-
 
 function openTab(evt, tabName) {
     // Declare all variables
