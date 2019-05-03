@@ -54,6 +54,12 @@ var prev_bonus;
 var isMaxScore;
 var isBonusEaten;
 var isTimeUp;
+var clock = new Image();
+clock.src = "clock.png";
+var pill = new Image();
+pill.src = "pill.png";
+var twoPills = new Image();
+twoPills.src = "2pill.png";
 
 function Start() {
     ghost1 = null;
@@ -83,7 +89,7 @@ function Start() {
     var point25_num = food_remain - point5_num - point15_num;
     audio = new Audio('introsound.mp3');
     audio.loop = true;
-    audio.play();
+    //audio.play();
 
     start_time = new Date();
 
@@ -118,7 +124,7 @@ function Start() {
                 bonus.j = j;
             }
             //put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
-            else if ((i === 3 && j === 3) || (i === 3 && j === 4) || (i === 3 && j === 5) || (i === 6 && j === 1) || (i === 6 && j === 2)) {
+            else if ((i === 3 && j === 3) || (i === 3 && j === 4) || (i === 3 && j === 5) || (i === 6 && j === 1) || (i === 6 && j === 2) || (i === 7 && j === 6) || (i === 8 && j === 6) || (i === 6 && j === 6) || (i === 1 && j === 8) || (i === 2 && j === 8)) {
                 board[i][j] = 4;
             } else {
                 var randomNum = Math.random();
@@ -148,6 +154,20 @@ function Start() {
             }
         }
     }
+        var index = 8;
+        loop2:
+            for (var k = 0; k < 10; k++) {
+                for (var l = 0; l < 10; l++) {
+                    if (index === 11) {
+                        break loop2;
+                    }
+                    if (board[k][l] === 0) {
+                        board[k][l] = index;
+                        index++;
+                    }
+                }
+            }
+
     while (food_remain > 0) {
         var emptyCell = findRandomEmptyCell(board);
         board[emptyCell[0]][emptyCell[1]] = 1;
@@ -317,12 +337,21 @@ function Draw() {
                 context.font = "20px Arial";
                 context.fillText("+50", center.x-13, center.y+5);
             }
+            else if (board[i][j] === 8) {
+                context.drawImage(pill, center.x-30, center.y-30);
+            }
+            else if (board[i][j] === 9) {
+                context.drawImage(clock, center.x-30, center.y-30);
+            }
+            else if (board[i][j] === 10) {
+                context.drawImage(twoPills, center.x-30, center.y-30);
+            }
         }
     }
 }
 
 function isValidStep(i, j) {
-    if (j >= 0 && j <= 9 && i >= 0 && i <= 9 && board[i][j] !== 4 && board[i][j] !== 3 && board[i][j] !== 7) {
+    if (j >= 0 && j <= 9 && i >= 0 && i <= 9 && board[i][j] !== 4 && board[i][j] !== 3 && board[i][j] !== 7 && board[i][j] !== 8 && board[i][j] !== 9 && board[i][j] !== 10) {
         return true;
     }
     else {
@@ -331,7 +360,7 @@ function isValidStep(i, j) {
 }
 
 function isValidStepForBonus(i, j) {
-    if (j >= 0 && j <= 9 && i >= 0 && i <= 9 && board[i][j] !== 4 && board[i][j] !== 3 && board[i][j] !== 2) {
+    if (j >= 0 && j <= 9 && i >= 0 && i <= 9 && board[i][j] !== 4 && board[i][j] !== 3 && board[i][j] !== 2 && board[i][j] !== 8 && board[i][j] !== 9 && board[i][j] !== 10) {
         return true;
     }
     else {
@@ -556,28 +585,44 @@ function moveGhost(ghost, ghost_dirction, ghost_num) {
         }
         intersection = true;
         prev_ghost = 0;
+        board[ghost.i][ghost.j] = prev_ghost;
+        if (ghost_num === 1) {
+            ghost.i = 0;
+            ghost.j = 0;
+        }
+        if (ghost_num === 2) {
+            ghost.i = 0;
+            ghost.j = 9;
+        }
+        if (ghost_num === 3) {
+            ghost.i = 9;
+            ghost.j = 0;
+        }
+        prev_ghost = board[ghost.i][ghost.j];
+        board[ghost.i][ghost.j] = 3;
     }
-
-    board[ghost.i][ghost.j] = prev_ghost;
-    switch(ghost_dirction) {
-        case "UP":
-        ghost.j--;
-        break;
-
-        case "DOWN":
-        ghost.j++;
-        break;
-
-        case "LEFT":
-        ghost.i--;
-        break;
-
-        case "RIGHT":
-        ghost.i++;
-        break;
+    else {
+        board[ghost.i][ghost.j] = prev_ghost;
+        switch(ghost_dirction) {
+            case "UP":
+            ghost.j--;
+            break;
+    
+            case "DOWN":
+            ghost.j++;
+            break;
+    
+            case "LEFT":
+            ghost.i--;
+            break;
+    
+            case "RIGHT":
+            ghost.i++;
+            break;
+        }
+        prev_ghost = board[ghost.i][ghost.j];
+        board[ghost.i][ghost.j] = 3;
     }
-    prev_ghost = board[ghost.i][ghost.j];
-    board[ghost.i][ghost.j] = 3;
 }
 
 function UpdatePosition() {
@@ -613,7 +658,7 @@ function UpdatePosition() {
         intersection = false;    
         var i = Math.floor(Math.random() * 10);
         var j = Math.floor(Math.random() * 10);
-        while ((i === shape.i && j === shape.j) || board[i][j] === 4 || board[i][j] === 3 || board[i][j] === 7) {
+        while ((i === shape.i && j === shape.j) || board[i][j] === 4 || board[i][j] === 3 || board[i][j] === 7 || board[i][j] === 8 || board[i][j] === 9 || board[i][j] === 10) {
             i = Math.floor(Math.random() * 10);
             j = Math.floor(Math.random() * 10);
         }
@@ -633,9 +678,20 @@ function UpdatePosition() {
         score+=50;
         isBonusEaten = true;
     }
+    if (board[shape.i][shape.j] === 8) {
+        lives+=1;
+    }
+    if (board[shape.i][shape.j] === 10) {
+        lives+=2;
+    }
+    if (board[shape.i][shape.j] === 9) {
+        start_time = new Date();
+    }
     board[shape.i][shape.j] = 2;
     var currentTime = new Date();
+
     time_elapsed = (currentTime - start_time) / 1000;
+
     if (game_over === true) {
         console.log(lives);
         Draw();
