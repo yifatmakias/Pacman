@@ -75,7 +75,7 @@ function Start() {
     prev_bonus = 0;
     direction = "RIGHT";
     direction_bonus = "LEFT";
-    ghost_radius = 20;
+    ghost_radius = 15;
     intersection = false;
     game_over = false;
     board = new Array();
@@ -91,7 +91,7 @@ function Start() {
     var point25_num = food_remain - point5_num - point15_num;
     audio = new Audio('introsound.mp3');
     audio.loop = true;
-    //audio.play();
+    audio.play();
 
     start_time = new Date();
 
@@ -222,7 +222,7 @@ function Draw() {
     lblPacmanName.value = pacman_name;
 
     context.beginPath();
-    context.rect(0, 0, 600, 600);
+    context.rect(0, 0, 400, 400);
     context.strokeStyle = "#000000";
     context.stroke();
     context.closePath();
@@ -230,31 +230,31 @@ function Draw() {
     for (var i = 0; i < 10; i++) {
         for (var j = 0; j < 10; j++) {
             var center = new Object();
-            center.x = i * 60 + 30;
-            center.y = j * 60 + 30;
+            center.x = i * 40 + 20;
+            center.y = j * 40 + 20;
             var x_eye = center.x + 5;
             var y_eye = center.y - 15;
             if (board[i][j] === 2) {
                 context.beginPath();
                 switch(direction) {
                     case "UP":
-                    context.arc(center.x, center.y, 30, 2*Math.PI-Math.PI*11/18, 2*Math.PI-Math.PI*7/18, true);
+                    context.arc(center.x, center.y, 20, 2*Math.PI-Math.PI*11/18, 2*Math.PI-Math.PI*7/18, true);
                     x_eye = center.x -15;
                     y_eye = center.y + 5;
                     break;
         
                     case "DOWN":
-                    context.arc(center.x, center.y, 30, 2*Math.PI-Math.PI*29/18, 2*Math.PI-Math.PI*25/18, true);
+                    context.arc(center.x, center.y, 20, 2*Math.PI-Math.PI*29/18, 2*Math.PI-Math.PI*25/18, true);
                     x_eye = center.x -15;
                     y_eye = center.y + 5;
                     break;
         
                     case "LEFT":
-                    context.arc(center.x, center.y, 30, 2*Math.PI-Math.PI*10/9, 2*Math.PI-Math.PI*8/9, true);
+                    context.arc(center.x, center.y, 20, 2*Math.PI-Math.PI*10/9, 2*Math.PI-Math.PI*8/9, true);
                     break;
         
                     case "RIGHT":
-                    context.arc(center.x, center.y, 30, 2*Math.PI-Math.PI/9, 2*Math.PI-Math.PI*17/9, true);
+                    context.arc(center.x, center.y, 20, 2*Math.PI-Math.PI/9, 2*Math.PI-Math.PI*17/9, true);
                     break;
         
                     default:
@@ -264,30 +264,30 @@ function Draw() {
                 context.fillStyle = pac_color; //color
                 context.fill();
                 context.beginPath();
-                context.arc(x_eye, y_eye, 5, 0, 2 * Math.PI); // circle
+                context.arc(x_eye, y_eye, 3, 0, 2 * Math.PI); // circle
                 context.fillStyle = "black"; //color
                 context.fill();
             } else if (board[i][j] === 1) {
                 context.beginPath();
-                context.arc(center.x, center.y, 7, 0, 2 * Math.PI); // circle
+                context.arc(center.x, center.y, 5, 0, 2 * Math.PI); // circle
                 context.fillStyle = color_5_points; //color
                 context.fill();
             }
             else if (board[i][j] === 5) {
                 context.beginPath();
-                context.arc(center.x, center.y, 11, 0, 2 * Math.PI); // circle
+                context.arc(center.x, center.y, 7, 0, 2 * Math.PI); // circle
                 context.fillStyle = color_15_points; //color
                 context.fill();
             } 
             else if (board[i][j] === 6) {
                 context.beginPath();
-                context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
+                context.arc(center.x, center.y, 10, 0, 2 * Math.PI); // circle
                 context.fillStyle = color_25_points; //color
                 context.fill();
             } 
              else if (board[i][j] === 4) {
                 context.beginPath();
-                context.rect(center.x - 30, center.y - 30, 60, 60);
+                context.rect(center.x - 20, center.y - 20, 40, 40);
                 context.fillStyle = "grey"; //color
                 context.fill();
             }
@@ -331,22 +331,22 @@ function Draw() {
             }
             else if (board[i][j] === 7) {
                 context.beginPath();
-                context.rect(center.x - 15, center.y - 15, 40, 40);
+                context.rect(center.x - 15, center.y - 10, 30, 30);
                 context.strokeStyle = "black"; //color
                 context.stroke();
                 context.closePath();
                 context.beginPath();
-                context.font = "20px Arial";
-                context.fillText("+50", center.x-13, center.y+5);
+                context.font = "12px Arial";
+                context.fillText("+50", center.x-10, center.y+5);
             }
             else if (board[i][j] === 8) {
-                context.drawImage(pill, center.x-30, center.y-30);
+                context.drawImage(pill, center.x-20, center.y-20);
             }
             else if (board[i][j] === 9) {
-                context.drawImage(clock, center.x-30, center.y-30);
+                context.drawImage(clock, center.x-20, center.y-20);
             }
             else if (board[i][j] === 10) {
-                context.drawImage(twoPills, center.x-30, center.y-30);
+                context.drawImage(twoPills, center.x-20, center.y-20);
             }
         }
     }
@@ -698,6 +698,7 @@ function UpdatePosition() {
     var currentTime = new Date();
 
     time_elapsed = (currentTime - start_time) / 1000;
+    Draw();
 
     if (game_over === true) {
         window.clearInterval(interval);
@@ -726,8 +727,7 @@ function UpdatePosition() {
     }
     else if (time_elapsed >= game_time) {
         isTimeUp = true;
-    }  
-    Draw();
+    }
     loop1:
     for (var i =0; i < 10; i++) {
         for (var j =0; j < 10; j++) {
@@ -983,6 +983,6 @@ function set() {
         var game_div = document.getElementById("game");
         settings_div.style.display = "none";
         game_div.style.display = "block";
-        Start();
+        newGame();
 }
 

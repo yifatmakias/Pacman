@@ -4,9 +4,11 @@
     <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body>
-    <header>Pacman</header>
+    <header>
+    </header>
     <menu>
         <div class="tab">
+            <img src="logo.png" width="15%">
             <button class="tablinks" onclick="openTab(event, 'welcome')" id="defaultOpen">Welcome</button>
             <button class="tablinks" onclick="openTab(event, 'register')">Register</button>
             <button class="tablinks" onclick="openTab(event, 'login')">Login</button>
@@ -115,16 +117,12 @@
 
                 </div>
                 <div id="game">                
-                    SCORE:
-                    <input id="lblScore" type="text"/>
-                    TIME:
-                    <input id="lblTime" type="text"/>
-                    LIVES:
-                    <input id="lblLives" type="text"/>
-                    Pacman Name:
-                    <input id="lblPacmanName" type="text"/>
+                    SCORE:<input id="lblScore" type="text"/>
+                    TIME:<input id="lblTime" type="text"/>
+                    LIVES:<input id="lblLives" type="text"/>
+                    PACMAN NAME:<input id="lblPacmanName" type="text"/>
                     <br/>
-                    <canvas id="canvas" height="600" width="600"></canvas><br>
+                    <canvas id="canvas" height="400" width="400"></canvas><br>
                     <button id="new_game" onclick="newGame()">Start New Game</button>
                 </div>
             </div>
