@@ -26,8 +26,8 @@ slider.oninput = function() {
 }
 
 //game parameters
-var context = canvas.getContext("2d");
-var shape = new Object();
+var context;
+var shape;
 var bonus;
 var ghost1;
 var ghost2;
@@ -62,6 +62,8 @@ var twoPills = new Image();
 twoPills.src = "2pill.png";
 
 function Start() {
+    context = canvas.getContext("2d");
+    shape = new Object();
     ghost1 = null;
     ghost2 = null;
     ghost3 = null;
