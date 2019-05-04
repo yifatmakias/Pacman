@@ -219,7 +219,7 @@ canvas {
 
 #welcome p{
   color:white;
-  font: 50px 'Press Start 2P',  cursive;
+  font: 30px 'Press Start 2P',  cursive;
   margin:30px 30px;
   /*position:absolute;
   text-align:center;*/
@@ -323,8 +323,9 @@ width: 15%;
   font-weight: bold;
 }
 
-#game input[type=text], input[type=password] {
+#game input[type=text] {
   width: 15%;
+  height: 5px;
   padding: 12px 20px;
   margin-left: 8px;
   margin-right: 8px;
