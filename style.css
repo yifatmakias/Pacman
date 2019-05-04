@@ -1,7 +1,172 @@
+@import url(https://fonts.googleapis.com/css?family=Press+Start+2P);
+
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+input,
+select,
+textarea,
+body * {
+  font-family: 'Roboto', sans-serif;
+  box-sizing: border-box;
+}
+
+.container {
+  position: relative;
+  max-width: 40rem;
+  margin: auto;
+  /*background: #fff;*/
+  width: 100%;
+  border-radius: 1px;
+}
+
+.pacman{
+  margin:40px 10px;
+}
+
+.pacman-top{
+  background-color:yellow;
+  height:100px;
+  width:200px;
+  border-radius:100px 100px 0 0;
+  animation: spin1 0.5s infinite linear;
+}
+
+.pacman-bottom{
+background-color:yellow;
+  height:100px;
+  width:200px;
+  border-radius:0 0 100px 100px;
+  animation: spin2 0.5s infinite linear;
+}
+
+.feed {
+margin-top: -185px;
+margin-left:15px;
+width: 45px;
+height: 45px;
+border-radius: 30%;
+-moz-animation: eat 1s linear 0s infinite;
+-webkit-animation: eat 1s linear 0s infinite;
+animation: eat 1s linear 0s infinite;
+}   
+
+/* Animation*/
+
+@keyframes spin1 {
+	0%  {transform: rotate(0deg);}
+	50%{transform: rotate(-35deg);}
+  
+}
+@keyframes spin2 {
+	0%  {transform: rotate(0deg);}
+  50%{transform: rotate(35deg);}	
+}
+
+@-moz-keyframes spin1 {
+	0%  {transform: rotate(0deg);}
+	50%{transform: rotate(-35deg);}
+  
+}
+@-moz-keyframes spin2 {
+	0%  {transform: rotate(0deg);}
+  50%{transform: rotate(35deg);}	
+}
+
+@-webkit-keyframes spin1 {
+	0%  {transform: rotate(0deg);}
+	50%{transform: rotate(-35deg);}
+  
+}
+@-webkit-keyframes spin2 {
+	0%  {transform: rotate(0deg);}
+  50%{transform: rotate(35deg);}	
+}
+
+@keyframes eat {
+	0% { box-shadow: 
+      100px 65px 0 0 white, 
+      300px 65px 0 0 white, 
+      500px 65px 0 0 white, 
+      700px 65px 0 0 white,
+      900px 65px 0 0 white, 
+      1100px 65px 0 0 white, 
+      1300px 65px 0 0 white;}
+  
+100% { box-shadow: 
+      0px 65px 0 0 white, 
+      100px 65px 0 0 white,
+      300px 65px 0 0 white, 
+      500px 65px 0 0 white, 
+      700px 65px 0 0 white, 
+      900px 65px 0 0 white, 
+      1100px 65px 0 0 white;}
+}
+
+
+
+@-moz-keyframes eat {
+	0% { box-shadow: 
+      100px 65px 0 0 white, 
+      300px 65px 0 0 white, 
+      500px 65px 0 0 white, 
+      700px 65px 0 0 white,
+      900px 65px 0 0 white, 
+      1100px 65px 0 0 white, 
+      1300px 65px 0 0 white;}
+  
+100% { box-shadow: 
+      0px 65px 0 0 white, 
+      100px 65px 0 0 white,
+      300px 65px 0 0 white, 
+      500px 65px 0 0 white, 
+      700px 65px 0 0 white, 
+      900px 65px 0 0 white, 
+      1100px 65px 0 0 white;}
+}
+
+
+
+@-webkit-keyframes eat {
+	0% { box-shadow: 
+      100px 65px 0 0 white, 
+      300px 65px 0 0 white, 
+      500px 65px 0 0 white, 
+      700px 65px 0 0 white,
+      900px 65px 0 0 white, 
+      1100px 65px 0 0 white, 
+      1300px 65px 0 0 white;}
+  
+100% { box-shadow: 
+      0px 65px 0 0 white, 
+      100px 65px 0 0 white,
+      300px 65px 0 0 white, 
+      500px 65px 0 0 white, 
+      700px 65px 0 0 white, 
+      900px 65px 0 0 white, 
+      1100px 65px 0 0 white;}
+}
+
+
 html
 {
     min-width: 1366;
     min-height: 768;
+}
+
+body
+{
+  background-color: black;
+}
+
+.small
+{
+  color: grey;
+  font-size: 85%;
+}
+
+.value
+{
+  color: black;
+  font-size: 100%;
 }
 
 menu {
@@ -11,8 +176,44 @@ menu {
 }
 
 canvas {
+    background-color: #000;
     display: block;
     margin: 0 auto;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  margin: auto;
+  width: 60%;
+  border: 3px solid black;
+  padding: 10px;
+  background-color: white;
+  font-style: ariel;
+}
+
+#welcome.tabcontent 
+{
+  background-color: #000;
+  text-align: center;
+}
+
+
+.login-form{
+  text-align: center;
+  background:url(login.jpg);
+}
+
+#register.tabcontent{
+  background:url(register.png);
+}
+
+#welcome p{
+  color:white;
+  font: 50px 'Press Start 2P',  cursive;
+  margin:30px 30px;
+  /*position:absolute;
+  text-align:center;*/
 }
 
 #game {
@@ -26,14 +227,16 @@ canvas {
 /* Style the tab */
 .tab {
   overflow: hidden;
-  border: 1px solid #ccc;
+  border: 1% solid #ccc;
   background-color: #f1f1f1;
   top: 0;
+  bottom: 0;
   margin: 0;
   padding: 0;
 }
 .tab img{
 float: left;
+width: 15%; 
 }
 
 /* Style the buttons inside the tab */
@@ -43,9 +246,10 @@ float: left;
   border: none;
   outline: none;
   cursor: pointer;
-  padding: 14px 16px;
-  transition: 0.3s;
-  font-size: 17px;
+  padding: 1% 1%;
+  /*transition: 0.3s;*/
+  font-size: 90%;
+  font-style: ariel;
 }
 
 /* Change background color of buttons on hover */
@@ -58,16 +262,59 @@ float: left;
   background-color: #ccc;
 }
 
-/* Style the tab content */
-.tabcontent {
-  display: none;
-  padding: 6px 12px;
-  border-top: none;
-}
+
+
 
   /* style for register form */
-/* Full-width input fields */
-input[type=text], input[type=password] {
+/* Full-width input fields*/
+#register-form input[type=text], #register-form input[type=password], #register-form input[type=date] {
+  width: 40%;
+  padding: 0.125rem 0.125rem 0.0625rem;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+#register-form label {
+  color: black;
+  top: -1rem;
+  font-weight: bold;
+}
+
+#settings input[type=text], #settings input[type=select] #settings input[type=number] {
+  width: 40%;
+  padding: 0.125rem 0.125rem 0.0625rem;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+#settings label {
+  color: black;
+  top: -1rem;
+  font-weight: bold;
+}
+
+#login-form input[type=text], #login-form input[type=password] {
+  width: 40%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+#login-form label {
+  color: black;
+  top: -1rem;
+  font-weight: bold;
+}
+
+#game input[type=text], input[type=password] {
   width: 15%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -76,19 +323,49 @@ input[type=text], input[type=password] {
   box-sizing: border-box;
 }
 
+
 /* Set a style for all buttons */
 .tabcontent button {
-  background-color: #4CAF50;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  cursor: pointer;
-  width: 20%;
+  -moz-box-shadow:inset 0px 1px 0px 0px #f9eca0;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #f9eca0;
+	box-shadow:inset 0px 1px 0px 0px #f9eca0;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #f0c911), color-stop(1, #f2ab1e));
+	background:-moz-linear-gradient(top, #f0c911 5%, #f2ab1e 100%);
+	background:-webkit-linear-gradient(top, #f0c911 5%, #f2ab1e 100%);
+	background:-o-linear-gradient(top, #f0c911 5%, #f2ab1e 100%);
+	background:-ms-linear-gradient(top, #f0c911 5%, #f2ab1e 100%);
+	background:linear-gradient(to bottom, #f0c911 5%, #f2ab1e 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f0c911', endColorstr='#f2ab1e',GradientType=0);
+	background-color:#f0c911;
+	-moz-border-radius:17px;
+	-webkit-border-radius:17px;
+	border-radius:17px;
+	border:1px solid #e65f44;
+	display:inline-block;
+	cursor:pointer;
+	color:#c92200;
+	font-family:Arial;
+	font-size:25px;
+	font-weight:bold;
+	padding:7px 26px;
+	text-decoration:none;
+  text-shadow:0px 2px 2px #ded17c;
 }
 
-.tab button:hover {
-  opacity: 0.8;
+.tabcontent button:hover {
+  background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #f2ab1e), color-stop(1, #f0c911));
+	background:-moz-linear-gradient(top, #f2ab1e 5%, #f0c911 100%);
+	background:-webkit-linear-gradient(top, #f2ab1e 5%, #f0c911 100%);
+	background:-o-linear-gradient(top, #f2ab1e 5%, #f0c911 100%);
+	background:-ms-linear-gradient(top, #f2ab1e 5%, #f0c911 100%);
+	background:linear-gradient(to bottom, #f2ab1e 5%, #f0c911 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f2ab1e', endColorstr='#f0c911',GradientType=0);
+	background-color:#f2ab1e;
+}
+
+.tabcontent button:active {
+	position:relative;
+	top:1px;
 }
 
 /* The Modal (background) */
@@ -113,6 +390,7 @@ input[type=text], input[type=password] {
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
+  font-style: ariel;
 }
 
 /* The Close Button */

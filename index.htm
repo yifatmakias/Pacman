@@ -8,7 +8,7 @@
     </header>
     <menu>
         <div class="tab">
-            <img src="logo.png" width="15%">
+            <img src="logo.png">
             <button class="tablinks" onclick="openTab(event, 'welcome')" id="defaultOpen">Welcome</button>
             <button class="tablinks" onclick="openTab(event, 'register')">Register</button>
             <button class="tablinks" onclick="openTab(event, 'login')">Login</button>
@@ -17,38 +17,47 @@
     </menu>
     <content>
             <div id="welcome" class="tabcontent">
-                welcome <br>
-                <button onclick="openTab(event, 'register')">Register</button><br>
-                <button onclick="openTab(event, 'login')">Login</button>
+                    <div class="pacman">
+                            <p>Welcome to PACMAN GAME!</p>
+                            <button onclick="openTab(event, 'register')">Register</button>
+                            <button onclick="openTab(event, 'login')">Login</button>
+                            <div class="pacman-top"></div>
+                            <div class="pacman-bottom"></div>
+                            <div class="feed"></div>
+                    </div>
             </div>
             <div id="register" class="tabcontent">
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.js"></script>
                 <form id="register-form">
                     <div class="container">
-                        <h1>Register</h1>
-                        <p>Please fill in this form to create an account.</p>
+                        <div style="text-align: center">
+                                <h1>Register</h1>
+                                <p>Please fill in this form to create an account.</p>
+                        </div>
                         <hr>
                     
-                        <label for="username"><b>User name</b></label>
+                        <label for="username">User name</label><br>
                         <input type="text" placeholder="Enter User Name" id="username-id" name="username" required><br>
 
-                        <label for="psw"><b>Password</b></label>
+                        <label for="psw">Password</label><br>
                         <input type="password" placeholder="Enter Password" id="psw-id" name="psw" required><br>
 
-                        <label for="firstname"><b>First name</b></label>
+                        <label for="firstname">First name</label><br>
                         <input type="text" placeholder="Enter First Name" name="firstname" required><br>
 
-                        <label for="lastname"><b>Last name</b></label>
+                        <label for="lastname">Last name</label><br>
                         <input type="text" placeholder="Enter Last Name" name="lastname"  required><br>
 
-                        <label for="email"><b>Email</b></label>
+                        <label for="email">Email</label><br>
                         <input type="text" placeholder="mail@website.com" name="email" required><br>
                     
-                        <label for="bday"><b>Birth date</b></label>
+                        <label for="bday">Birth Date</label><br>
                         <input type="date" placeholder="Enter Birth Date" name="bday" required><br>
                         <hr>
-                        <button type="submit" class="registerbtn">Register</button>
+                        <div style="text-align: center">
+                            <button type="submit" class="registerbtn">Register</button>
+                        </div>
                     </div>
                     
                 </form>
@@ -56,67 +65,81 @@
             <div id="login" class="tabcontent">
                 <div class="login-form" id="login-form">
                     <form class="login-form">
-                        <label for="username"><b>User name</b></label>
+                        <h1>Login</h1>
+                        <hr>
+                        <label for="username">User name</label>
                         <input type="text" placeholder="Enter User Name" id="loginusername" name="login-username" required><br>
 
-                        <label for="psw"><b>Password</b></label>
+                        <label for="psw">Password</label>
                         <input type="password" placeholder="Enter Password" id="loginpsw" name="login-psw" required><br>
+                        <hr>
                         <button type="button" onclick="check_login()">Login</button>
                     </form>
                 </div>
                 <div id="settings">
+                    <div style="text-align: center">
+                        <h1>Settings</h1>
+                    </div>
+                    <hr>
                     <p>Press a key on the keyboard in the following input fields to choose the game controls</p>
-                    <label for="up">Up</label>
-                    <input type="text" id="up" name="up" onkeydown="getGameControl(event,'up')">
-                    The Unicode value is:
-                    <p id="up_value"></p>
+                    <label for="up">Up</label><br>
+                    <input type="text" id="up" name="up" onkeydown="getGameControl(event,'up')"><br>
+                    <span class="small">The Unicode value is: </span>
+                    <span class="small" id="up_value"></span><br><br>
 
-                    <label for="down">Down</label>
-                    <input type="text" id="down" name="down" onkeydown="getGameControl(event,'down')">
-                    The Unicode value is: 
-                    <p id="down_value"></p>
+                    <label for="down">Down</label><br>
+                    <input type="text" id="down" name="down" onkeydown="getGameControl(event,'down')"><br>
+                    <span class="small">The Unicode value is: </span>
+                    <span class="small" id="down_value"></span><br><br>
 
-                    <label for="right">Right</label>
-                    <input type="text" id="right" name="right" onkeydown="getGameControl(event,'right')">
-                    The Unicode value is: 
-                    <p id="right_value"></p>
+                    <label for="right">Right</label><br>
+                    <input type="text" id="right" name="right" onkeydown="getGameControl(event,'right')"><br>
+                    <span class="small">The Unicode value is: </span>
+                    <span class="small" id="right_value"></span><br><br>
 
-                    <label for="left">Left</label>
-                    <input type="text" id="left" name="left" onkeydown="getGameControl(event,'left')">
-                    The Unicode value is: <p id="left_value"></p>
+                    <label for="left">Left</label><br>
+                    <input type="text" id="left" name="left" onkeydown="getGameControl(event,'left')"><br>
+                    <span class="small" >The Unicode value is: </span>
+                    <span class="small" id="left_value"></span>
 
-                    <p>Set the number of balls in the game:</p>
+                    <p><b>Set the number of balls in the game: </b></p>
                     <input type="range" min="50" max="90" class="slider" id="myRange">
-                    <label for="value">Chosen value:</label>
-                    <p id="slider_value"></p>
-                    <p>Set the colors of balls in the game:</p>
+                    <span class="small">Chosen value:</span>
+                    <span class="small" id="slider_value"></span>
+                    <p><b>Set the colors of balls in the game:</b></p>
                     <div>
-                        <input type="color" id="5point" name="5point" value="#000000">
-                        <label for="5point">5 point balls</label>
+                        <label for="5point">5 point balls: </label><br>
+                        <input type="color" id="5point" name="5point" value="#00ff00">
                     </div>
                     <div>
+                        <label for="15point">15 points balls: </label><br>
                         <input type="color" id="15point" name="15point" value="#0000ff">
-                        <label for="15point">15 points balls</label><br>
                     </div>
                     <div>
+                        <label for="25point">25 points balls: </label><br>
                         <input type="color" id="25point" name="25point" value="#ff0000">
-                        <label for="25point">25 points balls</label>
                     </div>
-                    <p>Set time for the game (seconds):</p>
-                    <input type="number" id="game_time" name="game_time" value="60" min="60"><br>
-
-                    <p>Set the number of monsters in the game:</p>
-                    <select id="num_of_monsters">
+                    <br>
+                    <div>
+                        <span class="value"><b>Set time for the game (seconds): </b</span>
+                        <input type="number" id="game_time" name="game_time" value="60" min="60"><br>
+                        <br>
+                        <span class="value"><b>Set the number of monsters in the game: </b></span>
+                        <select id="num_of_monsters">
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
-                    </select>
-                    <br><br>
-                    <button type="button" onclick="randomSettings()">Random</button>
-                    <button type="button" onclick="set()">Set</button>
+                        </select>
+                    </div>
+                    <br>
+                    <hr>
+                    <div style="text-align: center">
+                        <button type="button" onclick="randomSettings()">Random</button>
+                        <button type="button" onclick="set()">Set</button>
+                    </div>
 
                 </div>
-                <div id="game">                
+                <div id="game" class="game">                
                     SCORE:<input id="lblScore" type="text"/>
                     TIME:<input id="lblTime" type="text"/>
                     LIVES:<input id="lblLives" type="text"/>
@@ -126,7 +149,7 @@
                     <button id="new_game" onclick="newGame()">Start New Game</button>
                 </div>
             </div>
-            <div id="about" class="tabcontent">
+            <div id="about" >
                 <div id="myModal" class="modal">
                     <!-- Modal content -->
                     <div class="modal-content">
