@@ -225,7 +225,7 @@ function Draw() {
 
     context.beginPath();
     context.rect(0, 0, 400, 400);
-    context.strokeStyle = "#000000";
+    context.strokeStyle = "#FFD500";
     context.stroke();
     context.closePath();
 
@@ -334,11 +334,11 @@ function Draw() {
             else if (board[i][j] === 7) {
                 context.beginPath();
                 context.rect(center.x - 15, center.y - 10, 30, 30);
-                context.strokeStyle = "black"; //color
+                context.strokeStyle = "white"; //color
                 context.stroke();
                 context.closePath();
                 context.beginPath();
-                context.font = "12px Arial";
+                context.font = "15px Arial";
                 context.fillText("+50", center.x-10, center.y+5);
             }
             else if (board[i][j] === 8) {
@@ -958,12 +958,19 @@ function openTab(evt, tabName) {
     // set monsters number
     num_of_monsters = Math.floor(Math.random() * (4-1) + 1);
     document.getElementById("num_of_monsters").value = num_of_monsters;
+    alert("Warning: Game board is black, please choose colors to highlight balls.")
 }
 
 function set() {
+        var set = new Set(controls);
         // check if all fields are valid
         if (controls.length !== 4) {
             alert("Please enter all the settings fields.");
+            return;
+        }
+
+        if (set.size !== 4) {
+            alert("Please enter different controls to play the game.");
             return;
         }
 
@@ -985,6 +992,6 @@ function set() {
         var game_div = document.getElementById("game");
         settings_div.style.display = "none";
         game_div.style.display = "block";
-        newGame();
+        Start();
 }
 

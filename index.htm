@@ -19,8 +19,10 @@
             <div id="welcome" class="tabcontent">
                     <div class="pacman">
                             <p>Welcome to PACMAN GAME!</p>
-                            <button onclick="openTab(event, 'register')">Register</button>
-                            <button onclick="openTab(event, 'login')">Login</button>
+                            <br>
+                            <button class="welcome-button" onclick="openTab(event, 'register')">Register</button>
+                            <button class="welcome-button" onclick="openTab(event, 'login')">Login</button>
+                            <br><br><br><br>
                             <div class="pacman-top"></div>
                             <div class="pacman-bottom"></div>
                             <div class="feed"></div>
@@ -75,78 +77,85 @@
                         <hr>
                         <button type="button" onclick="check_login()">Login</button>
                     </form>
-                </div>
-                <div id="settings">
-                    <div style="text-align: center">
-                        <h1>Settings</h1>
-                    </div>
-                    <hr>
-                    <p>Press a key on the keyboard in the following input fields to choose the game controls</p>
-                    <label for="up">Up</label><br>
-                    <input type="text" id="up" name="up" onkeydown="getGameControl(event,'up')"><br>
-                    <span class="small">The Unicode value is: </span>
-                    <span class="small" id="up_value"></span><br><br>
-
-                    <label for="down">Down</label><br>
-                    <input type="text" id="down" name="down" onkeydown="getGameControl(event,'down')"><br>
-                    <span class="small">The Unicode value is: </span>
-                    <span class="small" id="down_value"></span><br><br>
-
-                    <label for="right">Right</label><br>
-                    <input type="text" id="right" name="right" onkeydown="getGameControl(event,'right')"><br>
-                    <span class="small">The Unicode value is: </span>
-                    <span class="small" id="right_value"></span><br><br>
-
-                    <label for="left">Left</label><br>
-                    <input type="text" id="left" name="left" onkeydown="getGameControl(event,'left')"><br>
-                    <span class="small" >The Unicode value is: </span>
-                    <span class="small" id="left_value"></span>
-
-                    <p><b>Set the number of balls in the game: </b></p>
-                    <input type="range" min="50" max="90" class="slider" id="myRange">
-                    <span class="small">Chosen value:</span>
-                    <span class="small" id="slider_value"></span>
-                    <p><b>Set the colors of balls in the game:</b></p>
-                    <div>
-                        <label for="5point">5 point balls: </label><br>
-                        <input type="color" id="5point" name="5point" value="#00ff00">
-                    </div>
-                    <div>
-                        <label for="15point">15 points balls: </label><br>
-                        <input type="color" id="15point" name="15point" value="#0000ff">
-                    </div>
-                    <div>
-                        <label for="25point">25 points balls: </label><br>
-                        <input type="color" id="25point" name="25point" value="#ff0000">
-                    </div>
                     <br>
-                    <div>
-                        <span class="value"><b>Set time for the game (seconds): </b</span>
-                        <input type="number" id="game_time" name="game_time" value="60" min="60"><br>
+                </div>
+                <div id="settings" class="settings">
+                    <div class="container">
+                        <div style="text-align: center">
+                            <h1>Settings</h1>
+                        </div>
+                        <hr>
+                        <p>Press a key on the keyboard in the following input fields to choose the game controls</p>
+                        <label for="up">Up</label><br>
+                        <input type="text" id="up" name="up" onkeydown="getGameControl(event,'up')"><br>
+                        <span class="small">The Unicode value is: </span>
+                        <span class="small" id="up_value"></span><br><br>
+
+                        <label for="down">Down</label><br>
+                        <input type="text" id="down" name="down" onkeydown="getGameControl(event,'down')"><br>
+                        <span class="small">The Unicode value is: </span>
+                        <span class="small" id="down_value"></span><br><br>
+
+                        <label for="right">Right</label><br>
+                        <input type="text" id="right" name="right" onkeydown="getGameControl(event,'right')"><br>
+                        <span class="small">The Unicode value is: </span>
+                        <span class="small" id="right_value"></span><br><br>
+
+                        <label for="left">Left</label><br>
+                        <input type="text" id="left" name="left" onkeydown="getGameControl(event,'left')"><br>
+                        <span class="small" >The Unicode value is: </span>
+                        <span class="small" id="left_value"></span>
+
+                        <p><b>Set the number of balls in the game: </b></p>
+                        <input type="range" min="50" max="90" class="slider" id="myRange">
+                        <span class="small">Chosen value:</span>
+                        <span class="small" id="slider_value"></span>
+                        <p><b>Set the colors of balls in the game:</b></p>
+                        <span>*Pay attention: Game board is black, please choose colors to highlight balls.*</span>
+                        <br><br>
+                        <div>
+                            <label for="5point">5 point balls: </label><br>
+                            <input type="color" id="5point" name="5point" value="#00ff00">
+                        </div>
+                        <div>
+                            <label for="15point">15 points balls: </label><br>
+                            <input type="color" id="15point" name="15point" value="#0000ff">
+                        </div>
+                        <div>
+                            <label for="25point">25 points balls: </label><br>
+                            <input type="color" id="25point" name="25point" value="#ff0000">
+                        </div>
                         <br>
-                        <span class="value"><b>Set the number of monsters in the game: </b></span>
-                        <select id="num_of_monsters">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                        </select>
+                        <div>
+                            <span class="value"><b>Set time for the game (seconds): </b</span>
+                            <input type="number" id="game_time" name="game_time" value="60" min="60"><br>
+                            <br>
+                            <span class="value"><b>Set the number of monsters in the game: </b></span>
+                            <select id="num_of_monsters">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                        </div>
+                        <br>
+                        <hr>
+                        <div style="text-align: center">
+                            <button type="button" onclick="randomSettings()">Random</button>
+                            <button type="button" onclick="set()">Set</button>
+                        </div>
+                        <br>
                     </div>
-                    <br>
-                    <hr>
-                    <div style="text-align: center">
-                        <button type="button" onclick="randomSettings()">Random</button>
-                        <button type="button" onclick="set()">Set</button>
-                    </div>
-
                 </div>
-                <div id="game" class="game">                
-                    SCORE:<input id="lblScore" type="text"/>
-                    TIME:<input id="lblTime" type="text"/>
-                    LIVES:<input id="lblLives" type="text"/>
-                    PACMAN NAME:<input id="lblPacmanName" type="text"/>
-                    <br/>
-                    <canvas id="canvas" height="400" width="400"></canvas><br>
-                    <button id="new_game" onclick="newGame()">Start New Game</button>
+                <div class="game" style="text-align: center">
+                    <div id="game" class="game">                
+                        <label>SCORE:</label><input id="lblScore" type="text"/>
+                        <label>TIME:</label><input id="lblTime" type="text"/>
+                        <label>LIVES:</label><input id="lblLives" type="text"/>
+                        <label>PACMAN:</label><input id="lblPacmanName" type="text"/>
+                        <br><br>
+                        <canvas id="canvas" height="400" width="400"></canvas><br>
+                        <button id="new_game" onclick="newGame()">Start New Game</button>
+                    </div>
                 </div>
             </div>
             <div id="about" >
@@ -154,7 +163,25 @@
                     <!-- Modal content -->
                     <div class="modal-content">
                         <span class="close">&times;</span>
-                        <p>Some text in the Modal..</p>
+                        <div style="text-align: center">
+                                <h1>About</h1>
+                        </div>
+                        <p>This game was created by Yifat Makias and Moran Shimshila,<br>
+                                We are students in the Department of Software and Information Systems Engineering at Ben Gurion University.<br><br>
+                                
+                                # At work we used the jQuery Plugin as follows:<br>
+                                Registration form for validation and submission.<br><br>
+                                
+                                # At work we used Template as follows:<br>
+                                In the welcome tab, we used a template from the internet that shows an animation of Pacman eating balls.<br><br>
+                                
+                                # Difficulties encountered during work:<br>
+                                - Draw the monsters in the game.<br>
+                                - The logic of moving the monsters in the game.<br>
+                                - Design the game site.</p>
+                            <div style="text-align: center">
+                                    <img src = "about.jpg"/>
+                            </div>
                     </div>
                 </div>
             </div>
