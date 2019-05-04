@@ -538,6 +538,7 @@ function getGhostDirection(ghost, ghost_number){
 
 function newGame() {
     window.clearInterval(interval);
+    audio.pause();
     Start();
 }
 
